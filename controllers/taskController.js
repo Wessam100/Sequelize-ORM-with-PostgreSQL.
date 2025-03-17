@@ -2,8 +2,8 @@ const Task = require('../models/Task');
 
 exports.createTask = async (req, res) => {
   try {
-    const { title, description, userId } = req.body;
-    const task = await Task.create({ title, description, userId });
+    const { title, userId } = req.body;
+    const task = await Task.create({ title, userId });
     res.status(201).json(task);
   } catch (error) {
     res.status(500).json({ error: error.message });
@@ -31,11 +31,11 @@ exports.getbyid = async (req, res) => {
 
 exports.updateTask = async (req, res) => {
   try {
-    const { title, description, status } = req.body;
+    const { title, status } = req.body;
     const task = await Task.findByPk(req.params.id);
     if (!task) return res.status(404).json({ error: 'Task not found' });
 
-    await task.update({ title, description, status });
+    await task.update({ title,status });
     res.status(200).json(task);
   } catch (error) {
     res.status(500).json({ error: error.message });
